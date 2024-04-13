@@ -82,7 +82,7 @@ if st.button("Load"):
             html_content = str(soup)
             st.components.v1.html(
                 html_content,
-                width=100%, height=600, scrolling=True
+                width=2000, height=600, scrolling=True
             )
             
             # Display the clickable links below the HTML content
