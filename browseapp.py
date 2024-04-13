@@ -6,12 +6,13 @@ import time
 
 
 # Function to hide the Streamlit main menu
-def hide_streamlit_menu():
+def hide_streamlit_style():
     """Hides the Streamlit main menu including the GitHub icon."""
     st.markdown(
         """
         <style>
-            #MainMenu {visibility: hidden;}
+            .streamlit-container {padding-top: 0rem;}
+            .sidebar-content {display: none;}
             footer {visibility: hidden;}
         </style>
         """,
@@ -19,11 +20,7 @@ def hide_streamlit_menu():
     )
 
 # Hide the Streamlit main menu
-hide_streamlit_menu()
-
-# Hide the Streamlit main menu
-hide_streamlit_menu()
-
+hide_streamlit_style()
 
 # Hide the GitHub icon and the "Fork this app" option
 st.set_page_config(page_title="Gamma Web Browser", page_icon=None, layout='wide')
