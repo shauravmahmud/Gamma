@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
-import webbrowser
+import os
 
 # Function to fetch and parse HTML content from a URL
 def fetch_url(url):
@@ -10,14 +10,16 @@ def fetch_url(url):
     soup = BeautifulSoup(response.content, 'html.parser')
     return soup
 
+# Function to save HTML content to a file
+def save_html_content(html_content, filename):
+    with open(filename, "w", encoding="utf-8") as file:
+        file.write(html_content)
+
 # Streamlit app layout
 st.title("Gamma Web Browser")
 
 # Input field for entering URL
 url = st.text_input("Enter URL")
-
-# Checkbox to choose display option
-display_in_browser = st.checkbox("Display in Browser")
 
 if st.button("Load"):
     if url:
@@ -34,10 +36,13 @@ if st.button("Load"):
             # Display the parsed HTML content
             st.write(soup.prettify())
             
-            # Check if the user selected to display in the browser
-            if display_in_browser:
-                # Open the web page in the default browser
-                webbrowser.open(url)
+            # Save the HTML content to a file
+            html_content = str(soup)
+            filename = "webpage_content.html"
+            save_html_content(html_content, filename)
+            
+            # Provide a link to the user to access the saved HTML file
+            st.markdown(f"[Download Webpage Content]({filename})")
             
         except Exception as e:
             st.error(f"Error loading URL: {e}")
