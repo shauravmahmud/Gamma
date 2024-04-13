@@ -35,7 +35,7 @@ if st.button("Load"):
 
             # Open URL in Browser (Interactive)
             if st.button("Open in Browser"):
-                webbrowser.open(url)
+                webbrowser.open_new_tab(url)  # Open URL in new tab
 
         except Exception as e:
             st.error(f"Error loading URL: {e}")
