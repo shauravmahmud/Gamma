@@ -32,14 +32,6 @@ if st.button("Load"):
             # Fetch and parse HTML content from the entered URL
             soup = fetch_url(url)
             
-            # Extract all links from the HTML content
-            links = extract_links(soup)
-            
-            # Display the links as clickable URLs
-            for link in links:
-                # Display each link as a clickable URL
-                st.markdown(f'<a href="{link["href"]}">{link.text.strip()}</a>', unsafe_allow_html=True)
-            
             # Display the HTML content in a new tab
             html_content = str(soup)
             st.components.v1.html(
