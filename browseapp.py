@@ -5,22 +5,18 @@ from urllib.parse import urlparse
 import time
 
 
-# Function to hide the Streamlit main menu
-def hide_streamlit_style():
-    """Hides the Streamlit main menu including the GitHub icon."""
-    st.markdown(
-        """
-        <style>
-            .streamlit-container {padding-top: 0rem;}
-            .sidebar-content {display: none;}
-            footer {visibility: hidden;}
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
 
-# Hide the Streamlit main menu
-hide_streamlit_style()
+# Function to hide Streamlit main menu and footer
+def hide_streamlit_style():
+    """Hides the Streamlit main menu and footer."""
+    hide_streamlit_style = """
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    </style>
+    """
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 
 # Hide the GitHub icon and the "Fork this app" option
 st.set_page_config(page_title="Gamma Web Browser", page_icon=None, layout='wide')
