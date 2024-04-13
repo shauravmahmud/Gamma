@@ -6,20 +6,30 @@ import time
 
 
 
-# Function to hide Streamlit main menu and footer
-def hide_streamlit_style():
-    """Hides the Streamlit main menu and footer."""
-    hide_streamlit_style = """
+# Set page title
+st.set_page_config(
+    page_title="Gamma Web Browser",
+    page_icon=None,
+    layout='wide',
+    initial_sidebar_state='collapsed'
+)
+
+# Custom CSS to hide elements
+custom_css = """
     <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
+        /* Hide the Streamlit main menu */
+        #MainMenu { visibility: hidden; }
+        /* Hide the "Run" button */
+        .stButton>button { display: none !important; }
+        /* Hide the "Deploy" button */
+        .stDeployButton { display: none !important; }
+        /* Hide the GitHub icon */
+        .stButton.github-corner { display: none !important; }
     </style>
-    """
-    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+"""
 
-
-# Hide the GitHub icon and the "Fork this app" option
-st.set_page_config(page_title="Gamma Web Browser", page_icon=None, layout='wide')
+# Apply the custom CSS
+st.markdown(custom_css, unsafe_allow_html=True)
 
 # Function to fetch and parse HTML content from a URL
 def fetch_url(url):
