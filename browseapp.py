@@ -36,8 +36,11 @@ if st.button("Load"):
                 unsafe_allow_html=True,
             )
             
-            # Add a link to open the URL in a new tab
-            st.markdown(f"[Open in new tab]({url})", unsafe_allow_html=True)
+            # Button to open HTML content in a new tab
+            st.markdown(
+                f'<a href="{url}" target="_blank">Open HTML Content in New Tab</a>',
+                unsafe_allow_html=True,
+            )
             
         except Exception as e:
             st.error(f"Error loading URL: {e}")
