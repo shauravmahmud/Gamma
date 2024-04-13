@@ -32,9 +32,6 @@ if st.button("Load"):
             # Fetch and parse HTML content from the entered URL
             soup = fetch_url(url)
             
-            # Display the parsed HTML content
-            st.write(soup.prettify())
-            
             # Extract all links from the HTML content
             links = extract_links(soup)
             
@@ -45,8 +42,6 @@ if st.button("Load"):
             
             # Display the HTML content in a new tab
             html_content = str(soup)
-            # Remove the DOCTYPE declaration from the HTML content
-            html_content = html_content.replace("<!DOCTYPE html>", "")
             st.components.v1.html(
                 html_content,
                 width=1000, height=600, scrolling=True
