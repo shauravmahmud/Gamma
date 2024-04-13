@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
+import webbrowser
 
 # Function to fetch and parse HTML content from a URL
 def fetch_url(url):
@@ -30,14 +31,10 @@ if st.button("Load"):
             # Display the parsed HTML content
             st.write(soup.prettify())
             
-            # Display the HTML content in a new tab
+            # Get the raw HTML content
             html_content = str(soup)
-            st.components.v1.html(
-                html_content,
-                width=1000, height=600, scrolling=True
-            )
             
-        except Exception as e:
-            st.error(f"Error loading URL: {e}")
-    else:
-        st.warning("Please enter a URL")
+            # Open the HTML content in a new tab of the user's browser
+            with open("temp.html", "w", encoding="utf-8") as f:
+                f.write(html_content)
+            webbrowser.open_new_tab("temp
