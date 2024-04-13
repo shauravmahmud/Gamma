@@ -3,9 +3,10 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 
-# Function to fetch and parse HTML content from a URL
-def fetch_url(url):
-    response = requests.get(url)
+# Function to fetch and parse HTML content from a URL using a proxy
+def fetch_url_with_proxy(url, proxy):
+    proxies = {"http": proxy, "https": proxy}
+    response = requests.get(url, proxies=proxies)
     soup = BeautifulSoup(response.content, 'html.parser')
     return soup
 
@@ -14,6 +15,9 @@ st.title("Gamma Web Browser")
 
 # Input field for entering URL
 url = st.text_input("Enter URL")
+
+# Input field for entering proxy server (if required)
+proxy = st.text_input("Enter Proxy Server (Optional)")
 
 if st.button("Load"):
     if url:
@@ -25,7 +29,10 @@ if st.button("Load"):
 
         try:
             # Fetch and parse HTML content from the entered URL
-            soup = fetch_url(url)
+            if proxy:
+                soup = fetch_url_with_proxy(url, proxy)
+            else:
+                soup = fetch_url(url)
             
             # Display the parsed HTML content
             st.write(soup.prettify())
