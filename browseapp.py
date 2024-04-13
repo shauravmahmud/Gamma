@@ -5,6 +5,13 @@ from urllib.parse import urlparse
 import time
 
 
+st.set_page_config(
+    page_title="Gamma",
+    page_icon="./image/gamma.png",
+    layout="wide"
+)
+
+
 hide_st_style = """
       <style>
       #MainMenu {visibility: hidden;}
