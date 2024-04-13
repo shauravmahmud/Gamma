@@ -7,7 +7,7 @@ import time
 
 st.set_page_config(
     page_title="Gamma",
-    page_icon="./image/gamma.png",
+    page_icon="./image/Greek_lc_gamma.svg.png",
     layout="wide"
 )
 
