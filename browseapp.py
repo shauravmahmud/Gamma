@@ -33,24 +33,16 @@ if st.button("Load"):
             soup = fetch_url(url)
             
             # Display the parsed HTML content
-            st.subheader("Parsed HTML Content")
-            st.code(soup.prettify(), language='html')
+            st.subheader("HTML Content:")
+            st.code(soup.prettify(), language="html")
             
             # Extract all links from the HTML content
             links = extract_links(soup)
             
-            # Display the links
-            st.subheader("Links")
-            if links:
-                for link in links:
-                    st.markdown(f"- [{link.text.strip()}]({link['href']})")
-            else:
-                st.write("No links found in the HTML content.")
-            
-            # Display the HTML content in a new tab
-            st.subheader("HTML Content")
-            html_content = str(soup)
-            st.code(html_content, language='html')
+            # Display the links as clickable URLs
+            st.subheader("Links:")
+            for link in links:
+                st.markdown(f"[{link.text.strip()}]({link['href']})")
             
         except Exception as e:
             st.error(f"Error loading URL: {e}")
