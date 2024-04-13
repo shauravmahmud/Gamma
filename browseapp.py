@@ -38,8 +38,10 @@ def modify_links(soup, url):
         link['href'] = href
     return soup
 
+
 # Streamlit app layout
-st.title("Gamma Web Browser")
+st.markdown("<h1 style='text-align: center;'>Gamma</h1>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center;'> Pierce through anything</h3>", unsafe_allow_html=True)
 
 # Input field for entering URL
 url = st.text_input("Enter URL")
