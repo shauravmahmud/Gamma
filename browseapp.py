@@ -2,7 +2,6 @@ import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
-import re
 
 # Function to fetch and parse HTML content from a URL
 def fetch_url(url):
