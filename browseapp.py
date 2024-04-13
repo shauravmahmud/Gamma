@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 import webbrowser
-import tempfile
+import os
 
 # Function to fetch and parse HTML content from a URL
 @st.cache
@@ -11,6 +11,11 @@ def fetch_url(url):
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
     return soup, response.content
+
+# Function to save HTML content to a file
+def save_html_to_file(html_content, filename):
+    with open(filename, "w", encoding="utf-8") as f:
+        f.write(html_content)
 
 # Streamlit app layout
 st.title("Simple Web Browser")
@@ -34,11 +39,13 @@ if st.button("Load"):
             st.write(f"Here's the parsed HTML content of {url}:")
             st.code(soup.prettify())
 
-            # Open HTML content in Browser (Interactive)
+            # Save HTML content to a temporary file
+            temp_file_path = "temp.html"
+            save_html_to_file(html_content, temp_file_path)
+
+            # Open HTML file in Browser (Interactive)
             if st.button("Open in Browser"):
-                with tempfile.NamedTemporaryFile(suffix=".html", delete=False) as tmp_file:
-                    tmp_file.write(html_content)
-                    webbrowser.open_new_tab(tmp_file.name)
+                webbrowser.open_new_tab(os.path.abspath(temp_file_path))  # Open HTML file in new tab
 
         except Exception as e:
             st.error(f"Error loading URL: {e}")
