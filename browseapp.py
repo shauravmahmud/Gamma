@@ -36,7 +36,7 @@ if st.button("Load"):
             st.write(soup.prettify())
             
             # Extract all links from the HTML content
-            #links = extract_links(soup)
+            links = extract_links(soup)
             
             # Display the links as clickable URLs
             for link in links:
