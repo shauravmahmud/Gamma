@@ -11,7 +11,7 @@ def fetch_url(url):
     return soup
 
 # Streamlit app layout
-st.title("Simple Web Browser")
+st.title("Gamma Web Browser")
 
 # Input field for entering URL
 url = st.text_input("Enter URL")
