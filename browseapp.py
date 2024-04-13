@@ -37,4 +37,9 @@ if st.button("Load"):
             # Open the HTML content in a new tab of the user's browser
             with open("temp.html", "w", encoding="utf-8") as f:
                 f.write(html_content)
-            webbrowser.open_new_tab("temp
+            webbrowser.open_new_tab("temp.html")
+            
+        except Exception as e:
+            st.error(f"Error loading URL: {e}")
+    else:
+        st.warning("Please enter a URL")
