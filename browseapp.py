@@ -56,7 +56,7 @@ if st.button("Load"):
             soup = modify_links(soup, url)
             
             # Display the subheader for the HTML content
-            st.subheader("HTML Content:")
+            st.subheader("Content Window")
             
             # Display the HTML content in a new tab
             html_content = str(soup)
