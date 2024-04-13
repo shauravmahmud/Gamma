@@ -2,25 +2,24 @@ import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
+import re
 
 # Function to fetch and parse HTML content from a URL
-def fetch_url(url, proxy=None):
-    if proxy:
-        proxies = {"http": proxy, "https": proxy}
-        response = requests.get(url, proxies=proxies)
-    else:
-        response = requests.get(url)
+def fetch_url(url):
+    response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
     return soup
+
+# Function to extract all links from HTML content
+def extract_links(soup):
+    links = soup.find_all('a', href=True)
+    return links
 
 # Streamlit app layout
 st.title("Gamma Web Browser")
 
 # Input field for entering URL
 url = st.text_input("Enter URL")
-
-# Input field for entering proxy server (if required)
-proxy = st.text_input("Enter Proxy Server (Optional)")
 
 if st.button("Load"):
     if url:
@@ -32,29 +31,21 @@ if st.button("Load"):
 
         try:
             # Fetch and parse HTML content from the entered URL
-            soup = fetch_url(url, proxy)
+            soup = fetch_url(url)
             
-            # Display the webpage title
-            title = soup.title.string if soup.title else "No Title Found"
-            st.header(title)
+            # Display the parsed HTML content
+            st.write(soup.prettify())
             
-            # Display specific HTML elements
-            st.subheader("HTML Elements:")
-            selected_tags = st.multiselect("Select HTML elements to display:", ["h1", "p", "a"])
-            for tag in selected_tags:
-                elements = soup.find_all(tag)
-                if elements:
-                    for element in elements:
-                        st.write(element)
-                else:
-                    st.write(f"No <{tag}> found on the page.")
+            # Extract all links from the HTML content
+            links = extract_links(soup)
+            
+            # Display the links as clickable URLs
+            for link in links:
+                st.markdown(f"[{link.text.strip()}]({link['href']})")
             
             # Display the HTML content in a new tab
             html_content = str(soup)
-            st.components.v1.html(
-                html_content,
-                width=1000, height=600, scrolling=True
-            )
+            st.markdown(html_content, unsafe_allow_html=True)
             
         except Exception as e:
             st.error(f"Error loading URL: {e}")
