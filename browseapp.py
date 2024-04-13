@@ -9,12 +9,10 @@ def fetch_url(url):
     soup = BeautifulSoup(response.content, 'html.parser')
     return soup
 
-# Function to make links clickable in HTML content
-def make_links_clickable(html_content):
-    soup = BeautifulSoup(html_content, 'html.parser')
-    for a_tag in soup.find_all('a', href=True):
-        a_tag['target'] = '_blank'
-    return str(soup)
+# Function to extract all links from HTML content
+def extract_links(soup):
+    links = soup.find_all('a', href=True)
+    return links
 
 # Streamlit app layout
 st.title("Gamma Web Browser")
@@ -36,11 +34,13 @@ if st.button("Load"):
             
             # Display the HTML content in a new tab
             html_content = str(soup)
-            clickable_html_content = make_links_clickable(html_content)
             st.components.v1.html(
-                clickable_html_content,
+                html_content,
                 width=1000, height=600, scrolling=True
             )
+            
+            # Display the original URL as a clickable link
+            st.markdown(f"[Original Link]({url})")
             
         except Exception as e:
             st.error(f"Error loading URL: {e}")
