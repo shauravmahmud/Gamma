@@ -34,8 +34,7 @@ if st.button("Load"):
             st.code(soup.prettify())
 
             # Open URL in Browser (Interactive)
-            if st.button("Open in Browser"):
-                webbrowser.open_new_tab(url)  # Open URL in new tab
+            st.markdown(f"[Open in Browser]({url})", unsafe_allow_html=True)
 
         except Exception as e:
             st.error(f"Error loading URL: {e}")
