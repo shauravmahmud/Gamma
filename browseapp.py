@@ -16,6 +16,9 @@ st.title("Gamma Web Browser")
 # Input field for entering URL
 url = st.text_input("Enter URL")
 
+# Checkbox to choose display option
+display_in_browser = st.checkbox("Display in Browser")
+
 if st.button("Load"):
     if url:
         # Check if the URL includes a scheme (e.g., http:// or https://)
@@ -31,8 +34,10 @@ if st.button("Load"):
             # Display the parsed HTML content
             st.write(soup.prettify())
             
-            # Open the web page in the default browser
-            webbrowser.open(url)
+            # Check if the user selected to display in the browser
+            if display_in_browser:
+                # Open the web page in the default browser
+                webbrowser.open(url)
             
         except Exception as e:
             st.error(f"Error loading URL: {e}")
