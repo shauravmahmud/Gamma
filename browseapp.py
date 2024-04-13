@@ -4,6 +4,10 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 import time
 
+
+# Hide the GitHub icon and the "Fork this app" option
+st.set_page_config(page_title="Gamma Web Browser", page_icon=None, layout='wide')
+
 # Function to fetch and parse HTML content from a URL
 def fetch_url(url):
     response = requests.get(url)
