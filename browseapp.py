@@ -2,7 +2,8 @@ import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
-import webbrowser  # Added for opening URL in browser
+import webbrowser
+import tempfile
 
 # Function to fetch and parse HTML content from a URL
 @st.cache
@@ -33,8 +34,11 @@ if st.button("Load"):
             st.write(f"Here's the parsed HTML content of {url}:")
             st.code(soup.prettify())
 
-            # Open URL in Browser (Interactive)
-            st.markdown(f"[Open in Browser]({url})", unsafe_allow_html=True)
+            # Open HTML content in Browser (Interactive)
+            if st.button("Open in Browser"):
+                with tempfile.NamedTemporaryFile(suffix=".html", delete=False) as tmp_file:
+                    tmp_file.write(html_content)
+                    webbrowser.open_new_tab(tmp_file.name)
 
         except Exception as e:
             st.error(f"Error loading URL: {e}")
