@@ -9,6 +9,23 @@ def fetch_url(url):
     soup = BeautifulSoup(response.content, 'html.parser')
     return soup
 
+# Function to modify the href attributes of all links to connect to the source link
+def modify_links(soup, url):
+    parsed_url = urlparse(url)
+    base_url = parsed_url.scheme + "://" + parsed_url.netloc
+    
+    links = soup.find_all('a', href=True)
+    for link in links:
+        href = link.get('href')
+        if href.startswith('#'):
+            # Skip internal links
+            continue
+        if not href.startswith('http'):
+            # If the href attribute does not start with http, it's a relative link, so prepend base_url
+            href = base_url + href
+        link['href'] = href
+    return soup
+
 # Streamlit app layout
 st.title("Gamma Web Browser")
 
@@ -26,6 +43,9 @@ if st.button("Load"):
         try:
             # Fetch and parse HTML content from the entered URL
             soup = fetch_url(url)
+            
+            # Modify the href attributes of links to connect to the source link
+            soup = modify_links(soup, url)
             
             # Display the HTML content in a new tab
             html_content = str(soup)
