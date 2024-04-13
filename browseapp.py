@@ -55,6 +55,9 @@ if st.button("Load"):
             # Modify the href attributes of links to connect to the source link
             soup = modify_links(soup, url)
             
+            # Display the subheader for the HTML content
+            st.subheader("HTML Content:")
+            
             # Display the HTML content in a new tab
             html_content = str(soup)
             st.components.v1.html(
