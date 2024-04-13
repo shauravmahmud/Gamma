@@ -54,6 +54,11 @@ if st.button("Load"):
                 width=1000, height=600, scrolling=True
             )
             
+            # Display the clickable links below the HTML content
+            st.subheader("Clickable Links:")
+            for link in soup.find_all('a'):
+                st.markdown(f"[{link.text.strip()}]({link['href']})", unsafe_allow_html=True)
+            
         except Exception as e:
             st.error(f"Error loading URL: {e}")
     else:
