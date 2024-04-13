@@ -40,7 +40,8 @@ if st.button("Load"):
             
             # Display the links as clickable URLs
             for link in links:
-                st.markdown(f"[{link.text.strip()}]({link['href']})")
+                # Display each link as a clickable URL
+                st.markdown(f'<a href="{link["href"]}">{link.text.strip()}</a>', unsafe_allow_html=True)
             
             # Display the HTML content in a new tab
             html_content = str(soup)
