@@ -47,7 +47,10 @@ if st.button("Load"):
 
             # Open HTML file in Browser (Interactive)
             if st.button("Open in Browser"):
-                webbrowser.open_new_tab(os.path.abspath(temp_file_path))  # Open HTML file in new tab
+                # Open the HTML file in browser
+                with open(temp_file_path, "r", encoding="utf-8") as file:
+                    html_code = file.read()
+                    st.components.v1.html(html_code, height=600)
 
         except Exception as e:
             st.error(f"Error loading URL: {e}")
