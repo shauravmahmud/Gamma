@@ -8,7 +8,7 @@ from urllib.parse import urlparse
 def fetch_url(url):
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
-    return soup
+    return soup, response.content
 
 # Streamlit app layout
 st.title("Simple Web Browser")
@@ -26,7 +26,7 @@ if st.button("Load"):
 
         try:
             # Fetch and parse HTML content from the entered URL
-            soup = fetch_url(url)
+            soup, html_content = fetch_url(url)
             
             # Display the parsed HTML content
             st.write(soup.prettify())
