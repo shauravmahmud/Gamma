@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
+import webbrowser
 
 # Function to fetch and parse HTML content from a URL
 def fetch_url(url):
@@ -30,11 +31,8 @@ if st.button("Load"):
             # Display the parsed HTML content
             st.write(soup.prettify())
             
-            # Embed the web page using an iframe
-            st.write(
-                f'<iframe src="{url}" width="100%" height="600px" scrolling="yes"></iframe>',
-                unsafe_allow_html=True,
-            )
+            # Open the web page in the default browser
+            webbrowser.open(url)
             
         except Exception as e:
             st.error(f"Error loading URL: {e}")
