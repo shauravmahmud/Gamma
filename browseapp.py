@@ -14,8 +14,10 @@ def fetch_url(url):
 
 # Function to save HTML content to a file
 def save_html_to_file(html_content, filename):
+    # Decode the bytes content to a string
+    html_string = html_content.decode('utf-8')
     with open(filename, "w", encoding="utf-8") as f:
-        f.write(html_content)
+        f.write(html_string)
 
 # Streamlit app layout
 st.title("Simple Web Browser")
