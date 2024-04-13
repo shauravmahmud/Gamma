@@ -45,6 +45,8 @@ if st.button("Load"):
             
             # Display the HTML content in a new tab
             html_content = str(soup)
+            # Remove the DOCTYPE declaration from the HTML content
+            html_content = html_content.replace("<!DOCTYPE html>", "")
             st.components.v1.html(
                 html_content,
                 width=1000, height=600, scrolling=True
