@@ -8,9 +8,18 @@ import time
 # Function to hide the Streamlit main menu
 def hide_streamlit_menu():
     """Hides the Streamlit main menu including the GitHub icon."""
-    st.markdown("""<style>
-        #MainMenu {visibility: hidden;}
-    </style>""", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+# Hide the Streamlit main menu
+hide_streamlit_menu()
 
 # Hide the Streamlit main menu
 hide_streamlit_menu()
