@@ -6,30 +6,14 @@ import time
 
 
 
-# Set page title
-st.set_page_config(
-    page_title="Gamma Web Browser",
-    page_icon=None,
-    layout='wide',
-    initial_sidebar_state='collapsed'
-)
-
-# Custom CSS to hide elements
-custom_css = """
-    <style>
-        /* Hide the Streamlit main menu */
-        #MainMenu { visibility: hidden; }
-        /* Hide the "Run" button */
-        .stButton>button { display: none !important; }
-        /* Hide the "Deploy" button */
-        .stDeployButton { display: none !important; }
-        /* Hide the GitHub icon */
-        .stButton.github-corner { display: none !important; }
-    </style>
-"""
-
-# Apply the custom CSS
-st.markdown(custom_css, unsafe_allow_html=True)
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
 
 # Function to fetch and parse HTML content from a URL
 def fetch_url(url):
