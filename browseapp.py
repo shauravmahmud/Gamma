@@ -1,15 +1,14 @@
+
 import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
-import tempfile
-import webbrowser
 
 # Function to fetch and parse HTML content from a URL
 def fetch_url(url):
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
-    return soup.prettify()
+    return soup
 
 # Streamlit app layout
 st.title("Gamma Web Browser")
@@ -27,15 +26,16 @@ if st.button("Load"):
 
         try:
             # Fetch and parse HTML content from the entered URL
-            html_content = fetch_url(url)
+            soup = fetch_url(url)
             
             # Display the parsed HTML content
-            st.code(html_content)
+            st.write(soup.prettify())
             
-            # Open the HTML content in a new browser tab
-            with tempfile.NamedTemporaryFile(mode='w', suffix='.html', delete=False) as f:
-                f.write(html_content)
-                webbrowser.open(f.name, new=2)
+            # Embed the web page using an iframe
+            st.write(
+                f'<iframe src="{url}" width="100%" height="600px" scrolling="yes"></iframe>',
+                unsafe_allow_html=True,
+            )
             
         except Exception as e:
             st.error(f"Error loading URL: {e}")
