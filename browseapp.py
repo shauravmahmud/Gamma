@@ -30,16 +30,11 @@ if st.button("Load"):
             # Display the parsed HTML content
             st.write(soup.prettify())
             
-            # Embed the web page using an iframe
-            st.write(
-                f'<iframe src="{url}" width="100%" height="600px" scrolling="yes"></iframe>',
-                unsafe_allow_html=True,
-            )
-            
-            # Button to open HTML content in a new tab
-            st.markdown(
-                f'<a href="{url}" target="_blank">Open HTML Content in New Tab</a>',
-                unsafe_allow_html=True,
+            # Display the HTML content in a new tab
+            html_content = str(soup)
+            st.components.v1.html(
+                html_content,
+                width=1000, height=600, scrolling=True
             )
             
         except Exception as e:
