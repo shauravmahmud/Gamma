@@ -9,11 +9,6 @@ def fetch_url(url):
     soup = BeautifulSoup(response.content, 'html.parser')
     return soup
 
-# Function to extract all links from HTML content
-def extract_links(soup):
-    links = soup.find_all('a', href=True)
-    return links
-
 # Streamlit app layout
 st.title("Gamma Web Browser")
 
@@ -38,9 +33,6 @@ if st.button("Load"):
                 html_content,
                 width=1000, height=600, scrolling=True
             )
-            
-            # Display the original URL as a clickable link
-            st.markdown(f"[Original Link]({url})")
             
         except Exception as e:
             st.error(f"Error loading URL: {e}")
