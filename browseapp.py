@@ -4,13 +4,11 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 import time
 
-
 st.set_page_config(
     page_title="Gamma",
     page_icon="./image/Greek_lc_gamma.svg.png",
     layout="wide"
 )
-
 
 hide_st_style = """
       <style>
@@ -21,10 +19,12 @@ hide_st_style = """
       """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
-
 # Function to fetch and parse HTML content from a URL
 def fetch_url(url):
-    response = requests.get(url)
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0',
+    }
+    response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.content, 'html.parser')
     return soup
 
