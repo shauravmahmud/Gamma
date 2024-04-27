@@ -20,7 +20,7 @@ hide_st_style = """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
 # Function to fetch and parse HTML content from a URL
-def fetch_url(url):
+def fetch_and_parse_html(url):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0',
     }
@@ -45,7 +45,6 @@ def modify_links(soup, url):
         link['href'] = href
     return soup
 
-
 # Streamlit app layout
 st.markdown("<h1 style='text-align: center;'>Gamma</h1>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center;'> Pierce through anything</h3>", unsafe_allow_html=True)
@@ -62,15 +61,9 @@ if st.button("Load"):
         placeholder.text("There will be a short delay after clicking load.")
         time.sleep(0.5)  # Add a short delay
         
-        # Check if the URL includes a scheme (e.g., http:// or https://)
-        parsed_url = urlparse(url)
-        if not parsed_url.scheme:
-            # If no scheme is provided, prepend https://
-            url = "https://" + url
-
         try:
             # Fetch and parse HTML content from the entered URL
-            soup = fetch_url(url)
+            soup = fetch_and_parse_html(url)
             
             # Modify the href attributes of links to connect to the source link
             soup = modify_links(soup, url)
