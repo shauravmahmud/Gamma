@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 from bs4 import BeautifulSoup
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urlunparse
 import time
 
 st.set_page_config(
@@ -28,22 +28,14 @@ def fetch_and_parse_html(url):
     soup = BeautifulSoup(response.content, 'html.parser')
     return soup
 
-from urllib.parse import urlparse
 
 def modify_links(soup, url):
     parsed_url = urlparse(url)
     base_url = parsed_url.scheme + "://" + parsed_url.netloc
     
-    if not parsed_url.scheme:
-        # If no scheme is provided, use an empty string as the base_url
-        base_url = ""
-    elif parsed_url.scheme not in ('http', 'https', 'ftp', 'mailto', 'file', 'data', 'irc', 'git', 'svn', 'spotify', 
-                                   'steam', 'magnet', 'ed2k', 'ipfs', 'gopher', 'ldap'):
-        # If the scheme is not in the list of valid schemes, set it to 'https' as default
-        base_url = "https://" + parsed_url.netloc
-    else:
-        # Use the original base_url
-        base_url = parsed_url.scheme + "://" + parsed_url.netloc
+    if not base_url.startswith('http'):
+        # If base_url does not start with http, assume it's a relative link and add https:// as default
+        base_url = "https://" + base_url
     
     links = soup.find_all('a', href=True)
     for link in links:
@@ -51,13 +43,12 @@ def modify_links(soup, url):
         if href.startswith('#'):
             # Skip internal links
             continue
-        if not any(href.startswith(scheme) for scheme in ('http', 'https', 'ftp', 'mailto', 'file', 'data', 'irc', 
-                                                           'git', 'svn', 'spotify', 'steam', 'magnet', 'ed2k', 
-                                                           'ipfs', 'gopher', 'ldap')):
-            # If the href attribute does not start with any valid scheme, prepend base_url
+        if not href.startswith('http'):
+            # If the href attribute does not start with http, it's a relative link, so prepend base_url
             href = base_url + href
         link['href'] = href
     return soup
+
 
 
 # Streamlit app layout
