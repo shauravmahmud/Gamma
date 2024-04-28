@@ -92,23 +92,21 @@ if st.button("Load"):
             # Display the clickable links below the HTML content
             st.subheader("Clickable Links:")
             for link in soup.find_all('a'):
-                st.markdown(f"[{link.text.strip()}]({link['href']})", unsafe_allow_html=True)
+                st.markdown(f"<a href='{link['href']}' onclick='set_url(\"{link['href']}\")'>{link.text.strip()}</a>", unsafe_allow_html=True)
             
         except Exception as e:
             st.error(f"Error loading URL: {e}")
     else:
         st.warning("Please enter a URL")
 
-# Adding event listener to handle link clicks
+# JavaScript function to set the URL input field with the clicked link's URL
 js_script = """
 <script type="text/javascript">
-    document.addEventListener("click", function(e) {
-        if (e.target && e.target.tagName == "A") {
-            e.preventDefault();
-            var url = e.target.getAttribute("href");
-            window.open(url, "_blank");
-        }
-    });
+    function set_url(url) {
+        var url_input = document.getElementById("url");
+        url_input.value = url;
+        url_input.dispatchEvent(new Event('input'));
+    }
 </script>
 """
 
