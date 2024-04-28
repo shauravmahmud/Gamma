@@ -50,13 +50,17 @@ def modify_links(soup, url):
         link['href'] = href
     return soup
 
+class SessionState:
+    def __init__(self, **kwargs):
+        self.__dict__.update(kwargs)
 
 # Streamlit app layout
 st.markdown("<h1 style='text-align: center;'>Gamma</h1>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center;'> Pierce through anything</h3>", unsafe_allow_html=True)
 
 # Input field for entering URL
-url = st.text_input("Enter URL")
+session_state = SessionState(url='')
+url = st.text_input("Enter URL", value=session_state.url)
 
 # Placeholder for the message
 placeholder = st.empty()
@@ -91,7 +95,7 @@ if st.button("Load"):
             # Display the clickable links below the HTML content
             st.subheader("Clickable Links:")
             for link in soup.find_all('a'):
-                st.write(f"<a href='javascript:void(0)' onclick='set_url(\"{link['href']}\")'>{link.text.strip()}</a>", unsafe_allow_html=True)
+                st.write(f"<a href='{link['href']}' onclick='set_url(\"{link['href']}\")'>{link.text.strip()}</a>", unsafe_allow_html=True)
             
         except Exception as e:
             st.error(f"Error loading URL: {e}")
@@ -105,6 +109,7 @@ js_script = """
         var url_input = document.getElementById("url");
         url_input.value = url;
         url_input.dispatchEvent(new Event('input'));
+        window.location.href = url; // Load the page
     }
 </script>
 """
