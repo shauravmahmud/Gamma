@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urlunparse
-import time
+
 
 st.set_page_config(
     page_title="Gamma",
@@ -65,7 +65,7 @@ if st.button("Load"):
     if url:
         # Display the message about the short delay
         placeholder.text("There will be a short delay after clicking load.")
-        time.sleep(0.5)  # Add a short delay
+      
         
         try:
             # Fetch and parse HTML content from the entered URL
