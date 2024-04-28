@@ -92,7 +92,7 @@ if st.button("Load"):
             # Display the clickable links below the HTML content
             st.subheader("Clickable Links:")
             for link in soup.find_all('a'):
-                st.markdown(f"<a href='{link['href']}' onclick='set_url_and_open(\"{link['href']}\")'>{link.text.strip()}</a>", unsafe_allow_html=True)
+                st.write(f"<a href='{link['href']}' onclick='set_url_and_open(\"{link['href']}\")'>{link.text.strip()}</a>", unsafe_allow_html=True)
             
         except Exception as e:
             st.error(f"Error loading URL: {e}")
