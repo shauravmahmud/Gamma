@@ -50,17 +50,12 @@ def modify_links(soup, url):
         link['href'] = href
     return soup
 
-class SessionState:
-    def __init__(self, **kwargs):
-        self.__dict__.update(kwargs)
-
 # Streamlit app layout
 st.markdown("<h1 style='text-align: center;'>Gamma</h1>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center;'> Pierce through anything</h3>", unsafe_allow_html=True)
 
 # Input field for entering URL
-session_state = SessionState(url='')
-url = st.text_input("Enter URL", value=session_state.url)
+url = st.text_input("Enter URL")
 
 # Placeholder for the message
 placeholder = st.empty()
@@ -95,23 +90,13 @@ if st.button("Load"):
             # Display the clickable links below the HTML content
             st.subheader("Clickable Links:")
             for link in soup.find_all('a'):
-                st.write(f"<a href='{link['href']}' onclick='set_url(\"{link['href']}\")'>{link.text.strip()}</a>", unsafe_allow_html=True)
-            
+                st.write(link.text.strip())
+                if st.button("Go to " + link['href']):
+                    st.write("Redirecting...")
+                    time.sleep(1)
+                    st.experimental_rerun()  # Rerun the app with the new URL
+                    
         except Exception as e:
             st.error(f"Error loading URL: {e}")
     else:
         st.warning("Please enter a URL")
-
-# JavaScript function to set the URL input field with the clicked link's URL
-js_script = """
-<script type="text/javascript">
-    function set_url(url) {
-        var url_input = document.getElementById("url");
-        url_input.value = url;
-        url_input.dispatchEvent(new Event('input'));
-        window.location.href = url; // Load the page
-    }
-</script>
-"""
-
-st.markdown(js_script, unsafe_allow_html=True)
