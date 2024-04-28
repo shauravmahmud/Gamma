@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urlunparse
+import time
 
 st.set_page_config(
     page_title="Gamma",
