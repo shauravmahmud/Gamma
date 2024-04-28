@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urlunparse
 import time
+import webbrowser
 
 
 st.set_page_config(
@@ -50,6 +51,7 @@ def modify_links(soup, url):
         link['href'] = href
     return soup
 
+
 # Streamlit app layout
 st.markdown("<h1 style='text-align: center;'>Gamma</h1>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center;'> Pierce through anything</h3>", unsafe_allow_html=True)
@@ -90,13 +92,24 @@ if st.button("Load"):
             # Display the clickable links below the HTML content
             st.subheader("Clickable Links:")
             for link in soup.find_all('a'):
-                st.write(link.text.strip())
-                if st.button("Go to " + link['href']):
-                    st.write("Redirecting...")
-                    time.sleep(1)
-                    st.experimental_rerun()  # Rerun the app with the new URL
-                    
+                st.markdown(f"[{link.text.strip()}]({link['href']})", unsafe_allow_html=True)
+            
         except Exception as e:
             st.error(f"Error loading URL: {e}")
     else:
         st.warning("Please enter a URL")
+
+# Adding event listener to handle link clicks
+js_script = """
+<script type="text/javascript">
+    document.addEventListener("click", function(e) {
+        if (e.target && e.target.tagName == "A") {
+            e.preventDefault();
+            var url = e.target.getAttribute("href");
+            window.open(url, "_blank");
+        }
+    });
+</script>
+"""
+
+st.markdown(js_script, unsafe_allow_html=True)
