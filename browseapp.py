@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 from bs4 import BeautifulSoup
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urlunparse
 
 st.set_page_config(
     page_title="Gamma",
@@ -27,13 +27,13 @@ def fetch_and_parse_html(url):
     soup = BeautifulSoup(response.content, 'html.parser')
     return soup
 
-# Function to modify links in the HTML content
+
 def modify_links(soup, url):
     parsed_url = urlparse(url)
     base_url = parsed_url.scheme + "://" + parsed_url.netloc
     
-    # Prepend "https://" if no scheme is provided
     if not base_url.startswith('http'):
+        # If base_url does not start with http, assume it's a relative link and add https:// as default
         base_url = "https://" + base_url
     
     links = soup.find_all('a', href=True)
@@ -48,9 +48,11 @@ def modify_links(soup, url):
         link['href'] = href
     return soup
 
+
+
 # Streamlit app layout
 st.markdown("<h1 style='text-align: center;'>Gamma</h1>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: center;'>Pierce through anything</h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center;'> Pierce through anything</h3>", unsafe_allow_html=True)
 
 # Input field for entering URL
 url = st.text_input("Enter URL")
@@ -62,9 +64,14 @@ if st.button("Load"):
     if url:
         # Display the message about the short delay
         placeholder.text("There will be a short delay after clicking load.")
+        time.sleep(0.5)  # Add a short delay
         
         try:
             # Fetch and parse HTML content from the entered URL
+            parsed_url = urlparse(url)
+            if not parsed_url.scheme:
+                # Prepend "https://" if no scheme is provided
+                url = "https://" + url
             soup = fetch_and_parse_html(url)
             
             # Modify the href attributes of links to connect to the source link
