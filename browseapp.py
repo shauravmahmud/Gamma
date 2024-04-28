@@ -66,7 +66,7 @@ if st.button("Load"):
     if url:
         # Display the message about the short delay
         placeholder.text("There will be a short delay after clicking load.")
-        time.sleep(0.5)
+        time.sleep(1.0)
       
         
         try:
