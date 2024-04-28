@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urlunparse
 import time
+import webbrowser
 
 
 st.set_page_config(
@@ -51,7 +52,6 @@ def modify_links(soup, url):
     return soup
 
 
-
 # Streamlit app layout
 st.markdown("<h1 style='text-align: center;'>Gamma</h1>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center;'> Pierce through anything</h3>", unsafe_allow_html=True)
@@ -67,7 +67,6 @@ if st.button("Load"):
         # Display the message about the short delay
         placeholder.text("There will be a short delay after clicking load.")
         time.sleep(1.0)
-      
         
         try:
             # Fetch and parse HTML content from the entered URL
@@ -99,3 +98,18 @@ if st.button("Load"):
             st.error(f"Error loading URL: {e}")
     else:
         st.warning("Please enter a URL")
+
+# Adding event listener to handle link clicks
+js_script = """
+<script type="text/javascript">
+    document.addEventListener("click", function(e) {
+        if (e.target && e.target.tagName == "A") {
+            e.preventDefault();
+            var url = e.target.getAttribute("href");
+            window.open(url, "_blank");
+        }
+    });
+</script>
+"""
+
+st.markdown(js_script, unsafe_allow_html=True)
