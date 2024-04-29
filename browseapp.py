@@ -1,19 +1,15 @@
+
 import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urlunparse
 import time
 import webbrowser
-#import socks
-#import socket
 
-# Set up SOCKS proxy
-#socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, "127.0.0.1", 9050)
-#socket.socket = socks.socksocket
 
 st.set_page_config(
-    page_title="Tor Browser",
-    page_icon="🔒",
+    page_title="Gamma",
+    page_icon="./image/Greek_lc_gamma.svg.png",
     layout="wide"
 )
 
@@ -29,9 +25,8 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 # Function to fetch and parse HTML content from a URL
 def fetch_and_parse_html(url):
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0',
     }
-    # Remove proxies parameter
     response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.content, 'html.parser')
     return soup
@@ -59,8 +54,8 @@ def modify_links(soup, url):
 
 
 # Streamlit app layout
-st.markdown("<h1 style='text-align: center;'>Tor Browser</h1>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: center;'>Browsing Anonymously</h3>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>Gamma</h1>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center;'> Pierce through anything</h3>", unsafe_allow_html=True)
 
 # Input field for entering URL
 url = st.text_input("Enter URL")
