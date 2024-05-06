@@ -83,12 +83,15 @@ if st.button("Load"):
             # Display the subheader for the HTML content
             st.subheader("Content Window")
             
+            
             # Display the HTML content in a new tab
             html_content = str(soup)
-            st.components.v1.html(
-                html_content,
-                width=1100, height=600, scrolling=True
+            st.markdown(
+               html_content,
+               unsafe_allow_html=True,
+               width=1100, height=600
             )
+
             
             # Display the clickable links below the HTML content
             st.subheader("Clickable Links:")
