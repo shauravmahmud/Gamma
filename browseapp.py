@@ -85,9 +85,10 @@ if st.button("Load"):
             
             
             # Display the HTML content in a new tab
-            html_content = str(soup)
-            styled_html = f'<div style="width: 1100px; height: 600px; overflow: auto;">{html_content}</div>'
-            st.markdown(styled_html, unsafe_allow_html=True)
+            html_content = str(soup)  # Assuming you have parsed HTML content in `html_content`
+            st.subheader("Content Window")
+            st.write(f"<div style='overflow-x: auto; overflow-y: scroll; height: 600px; width: 1100px;'>{html_content}</div>", unsafe_allow_html=True)
+
 
 
 
