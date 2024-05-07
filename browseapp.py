@@ -85,10 +85,11 @@ if st.button("Load"):
             
             
             # Display the HTML content in a new tab
-            html_content = str(soup)  # Assuming you have parsed HTML content in `html_content`
-            st.subheader("Content Window")
-            st.write(f"<div style='overflow-x: auto; overflow-y: scroll; height: 600px; width: 800px;'>{html_content}</div>", unsafe_allow_html=True)
-
+            html_content = str(soup)
+            st.components.v1.html(
+                html_content,
+                width=1100, height=600, scrolling=True
+            )
 
 
 
